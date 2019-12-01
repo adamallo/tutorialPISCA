@@ -27,18 +27,18 @@ Java is a cross-platform general-purpose programming language. Java applications
 <pre><code>\> java -version
 java version "1.8.0_60"
 Java(TM) SE Runtime Environment (build 1.8.0_60-b27)
-Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)</pre></code>
+Java HotSpot(TM) 64-Bit Server VM (build 25.60-b23, mixed mode)</code></pre>
 
 
 
 ###### Linux
-<pre><code>sudo apt install openjdk-8-jre-headless</pre></code>
+<pre><code>sudo apt install openjdk-8-jre-headless</code></pre>
 ###### Windows/MAC
 Download the Java JRE from `https://www.oracle.com/technetwork/java/javase/downloads/index.html` and install following the normal procedure of your system.
 
 ### R?
 ###### Linux
-<pre><code>sudo apt-get install libopenblas-base r-base</pre></code>
+<pre><code>sudo apt-get install libopenblas-base r-base</code></pre>
 ###### Windows
 
 ###### Mac
