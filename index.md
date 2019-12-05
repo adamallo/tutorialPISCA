@@ -2,7 +2,7 @@
 
 ## READ FIRST
 ### Virtual Machine or Native installation?
-You can follow this tutorial using your own system or a virtual machine image I will provide for the ACE Bootcamp. A virtual machine is as emulation of a computer system, sort of a simulated computer within your computer. If you use the virtual machine image provided (with a Linux distribution, specifically, Ubuntu 18.04.3 LTS), you will not have to install any software in your computer, apart from a virtualization product (e.g., [VirtualBox](https://www.virtualbox.org/wiki/Downloads){:target="_blank"}) and all software needed to follow the tutorial will be included in the machine. The execution of PISCA will be slower, but you will be able to follow the tutorial. **I recommend using the virtual machine to users that do not plan to use PISCA or BEAST in the near future, and do not plan to analyze data of their own today**. Otherwise, I think this may be a good opportunity for you to install the software for future usage.
+You can follow this tutorial using your own system or a virtual machine image I will provide for the ACE Bootcamp. A virtual machine is an emulation of a computer system, sort of a simulated computer within your computer. If you use the virtual machine image I am providing (with a Linux distribution, specifically, Ubuntu 18.04.3 LTS), you will not have to install any software in your computer, apart from a virtualization product (e.g., [VirtualBox](https://www.virtualbox.org/wiki/Downloads){:target="_blank"}) and all software needed to follow the tutorial will be included in the machine. The execution of PISCA will be slower, but you will be able to follow the tutorial. **I recommend using the virtual machine to avoid installation issues**. 
 
 **License disclaimer: I will provided the virtual machine for its usage during the ACE Bootcamp only. Do not distribute it.**
 
@@ -23,7 +23,7 @@ YES!
 
 ## Exercise 1: Using PISCA to reconstruct a somatic phylogeny
 ### General description
-We will be analyzing a rather small toy dataset. Part of the activity will be for you to get a better understanding on its characteristics by inspecting the input data. For now, it will be enough to know that we are analyzing allele-specific copy number states from a number of homogeneous samples taken at two time points (dated in years from the date of birth of the patient).
+We will be analyzing a rather small toy dataset. Part of the activity will be for you to get a better understanding of its characteristics by inspecting the input data. For now, it is enough to know that we are analyzing allele-specific copy number states from a number of homogeneous samples taken at two time points (dated in years from the date of birth of the patient).
 
 In this activity you will learn:
 
@@ -31,6 +31,8 @@ In this activity you will learn:
 - Determine if the MCMC chain converged and mixed properly
 - Tweak the MCMC chain
 - Identify if your results are driven by your priors
+- Summarize the results
+- Obtain a visual representation of the resulting evolutionary hypothesis (tree and parameters)
 
 ### Running PISCA using a given XML input file
 
@@ -38,37 +40,25 @@ In this activity you will learn:
 - Find the input file *strict\_test\_short.xml* in *Desktop/tutorial/datasets*
 - Feel free to change the random number seed (not necessary)
 - Start the analysis
-- This analysis will take from 1 to 5 minutes. **Use this time to inspect the information that is printed in the console**
+- This analysis will take from 1 to 5 minutes. 
+**Use this time to inspect the information that is printed in the console**
 
-<details><summary>**Could you tell how many MCMC iteractions (states in the Markov Chain) are you running the algorithm for?**</summary>
+<details><summary>Could you tell how many MCMC iteractions (states in the Markov Chain) are you running the algorithm for?</summary>
 <p>
 The first column indicates the step sampled in that row
 </p>
 </details>
 
-<details><summary>**Why the posterior probability is not growing monotonically?**</summary>
+<details><summary>Why the posterior probability is not growing monotonically?</summary>
 <p>
 Remember, MCMC is a Markov chain that samples the posterior probability distribution (remember the robot!). It samples more often the regions of the distribution with higher density, instead of maximizing any value. 
 </p>
 </details>
 
-##I need to move this to the next block
-<details><summary>**Take a careful look at the last table printed on the console when the analysis finishes. Do you remember what operators are?**</summary>
-<p>
-The operators are the functions used in the MCMC to propose new states. The operator name follows a simple scheme function(parameter).
-</p>
-</details>
-
-<details><summary>**What do you think the column count may mean. Why do you think that not all operators have the same count? Do you think that tunning this may improve your MCMC chain>**</summary>
-<p>
-Some parameters are easier to estimate than others, and some are more interesting than others. Tweaking the relative weight of the different operators in the xml may help you improve the sampling efficiency of your MCMC.
-</p>
-</details>
-
 ### Running a second XML input file
-- Before going forward, repeat the same 
-
-Please, use this time to get familiarized with the software we will be using along this tutorial (below)
+- Before going forward, repeat the same procedure with the *strict\_test.xml* file
+- This analysis will take from 10 to 20 minutes.
+**We will use this time to get familiarized with the software we will be using later, and to analyze the previous run**
 
 ## Software relevant for this tutorial
 ## [BEAST](http://beast.community/index.html){:target="_blank"}
@@ -122,7 +112,7 @@ BEAST component that summarizes a posterior samples of trees in a single estimat
 ## [FigTree](http://tree.bio.ed.ac.uk/software/figtree/){:target="_blank"}
 Program to inspect and format phylogenetic trees. 
 
-**WARNING:** Do not open a .trees file directly using FigTree. This files contains the whole posterior sample (i.e., thousands to millions of trees) and may freeze your computer. Make sure to only open with it a small number of trees (e.g., single estimates generated using TreeAnnotator).
+**WARNING:** Do not open a .trees file directly using FigTree. These files contain the whole posterior sample (i.e., thousands to millions of trees) and may freeze your computer. Make sure to only open with it a small number of trees (e.g., single estimates generated using TreeAnnotator).
 
 ## [Tracer](http://beast.community/tracer){:target="_blank"}
 Program to analyze the posterior sample of MCMC data. Among other features, it is used to [obtain posterior point estimates of parameters](https://beast.community/analysing_beast_output) and [check proper convergence](https://beast.community/tracer_convergence) and mixing.
@@ -131,7 +121,76 @@ Program to analyze the posterior sample of MCMC data. Among other features, it i
 More comprehensive R package to diagnose convergence and mixing of MCMC chains, including intra and inter-chain diagnostics of trees.
 
 # Exercise 1 (cont.)
-## 
+
+### Analyzing the MCMC chain of the *strict\_test\_short.xml* run
+- Open the program *Tracer*
+- Find the file with the posterior sample of the evolutionary parameters of this run in the folder *Desktop/tutorial/*
+<details><summary>The file with the posterior whaaat?</summary>
+<p>
+The values that the MCMC had in each sampled state for evolutionary parameters other than the phylogenetic tree. The strict_test_short.log file.
+</p>
+</details>
+- Inspect the file with a text editor to understand what you are working with (a 1 minute glance)
+- Drag it and drop it on Tracer
+<details><summary>Do you think we have sampled the posterior probability properly?</summary>
+<p>
+NO. ESSs are very low. Remember, we would like to have >200 ESS in all parameters of interest, and any parameter with very low ESS indicate a convergence (or mixing) problem
+</p>
+</details>
+
+<details><summary>Do all parameters mix equally?</summary>
+<p>
+NO. You will see that some parameters are mixing properly (fuzzy caterpillar), while others show mixing problems.
+</p>
+</details>
+
+<details><summary>Do all parameters mix equally?</summary>
+<p>
+NO. You will see that some parameters are mixing properly (fuzzy caterpillar), while others show mixing problems.
+</p>
+</details>
+
+<details><summary>What mixing problems can you identify?</summary>
+<p>
+The chain gets stuck estimating substitution rates. You will also see directionality in some parameters (probably in the posterior).
+</p>
+</details>
+
+<details><summary>Can you think of ways to solving these problems?</summary>
+<p>
+- The mixing of stuck parameters can be usually improved by decreasing the size of the step (editing the operator that proposes new values for this parameter).
+- The mixing of parameters that show trends can be usually improved by increasing the size of the step.
+- A lot of mixing problems can be solved increasing the sampling frequency. In this case, this run had an extremely low sampling frequency (20) just to generate this problems. However, generally speaking, we can't increase the sampling frequency forever (the chain would have to run forever), this is an equivalent to *brute force*.
+</p>
+</details>
+
+### Inspecting the chain we have running, *strict\_test.xml*
+- Is it done? Great! Otherwise, let me know.
+<details><summary>Take a careful look at the last table printed on the console when the analysis finishes. Do you remember what operators are?</summary>
+<p>
+The operators are the functions used in the MCMC to propose new states. The operator name follows a simple scheme function(parameter).
+</p>
+</details>
+
+<details><summary>What do you think the column count may mean. Why do you think that not all operators have the same count? Do you think that tunning this may improve your MCMC chain</summary>
+<p>
+Some parameters are easier to estimate than others, and some are more interesting than others. Tweaking the relative weight of the different operators in the xml may help you improve the sampling efficiency of your MCMC.
+</p>
+</details>
+
+- Add the the longer chain, compare
+- Add a previously generated chain, compare the three
+
+
+### Sampling from the prior
+
+
+### Summarizing the results
+
+### Obtaining the tree
+
+## Exercise 2 (Optional)
+We will analyze traces of a real experiment
 
 
 <!---
