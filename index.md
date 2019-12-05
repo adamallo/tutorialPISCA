@@ -125,34 +125,28 @@ More comprehensive R package to diagnose convergence and mixing of MCMC chains, 
 ### Analyzing the MCMC chain of the *strict\_test\_short.xml* run
 - Open the program *Tracer*
 - Find the file with the posterior sample of the evolutionary parameters of this run in the folder *Desktop/tutorial/*
-
 <details><summary>The file with the posterior whaaat?</summary>
 <p>
 The values that the MCMC had in each sampled state for evolutionary parameters other than the phylogenetic tree. The strict_test_short.log file.
 </p>
 </details>
-
 - Inspect the file with a text editor to understand what you are working with (a 1 minute glance)
 - Drag it and drop it on Tracer
-
 <details><summary>Do you think we have sampled the posterior probability properly?</summary>
 <p>
 NO. ESSs are very low. Remember, we would like to have >200 ESS in all parameters of interest, and any parameter with very low ESS indicate a convergence (or mixing) problem
 </p>
 </details>
-
 <details><summary>Do all parameters mix equally?</summary>
 <p>
 NO. You will see that some parameters are mixing properly (fuzzy caterpillar), while others show mixing problems.
 </p>
 </details>
-
 <details><summary>What mixing problems can you identify?</summary>
 <p>
 The chain gets stuck estimating substitution rates. You will also see directionality in some parameters (probably in the posterior).
 </p>
 </details>
-
 <details><summary>Can you think of ways to solving these problems?</summary>
 <p>
 - The mixing of stuck parameters can be usually improved by decreasing the size of the step (editing the operator that proposes new values for this parameter).
@@ -168,27 +162,57 @@ The chain gets stuck estimating substitution rates. You will also see directiona
 The operators are the functions used in the MCMC to propose new states. The operator name follows a simple scheme function(parameter).
 </p>
 </details>
-
 <details><summary>What do you think the column count may mean? Why do you think that not all operators have the same count? Do you think that tunning this may improve your MCMC chain?</summary>
 <p>
 Some parameters are easier to estimate than others, and some are more interesting than others. Tweaking the relative weight of the different operators in the xml may help you improve the sampling efficiency of your MCMC.
 </p>
 </details>
-
-- Add the the longer chain, compare
-- Add a previously generated chain, compare the three
-
+- Now, drag and drop the new posterior sample (*strict\_test.log*) into tracer. In the top panel, you will be able to see the two files (samples). You can select a specific parameter, and switch between one and another file. More importantly, you can also select both files (press ctrl when selecting the second), and compare the two posterior distributions
+- Make sure to compare most/all parameters in the different views (estimates, marginal density, traits...)
+- Now, select two parameters at the same time to see their joint-marginal.
+- It is time to compare it with another posterior sample I previously generated. You can find it at *Desktop/tutorial/prerun_results/strict_test.log*
+<details><summary>Do you think the MCMC converged?</summary>
+<p>
+These MCMC chains are fairly short due to time constraints. However, if you compare the two long chains you'd probably find that they seem to have converged. Remember, this is a toy dataset and therefore has less noise than real data.
+</p>
+</details>
+- Finally, I encourage you to dive into the .xml file. Can you locate the data? Models? Operators? MCMC options? At the end of the day, when you do real Bayesian inference you always end up having to modify the .xml directly, you'd better get used to it!
 
 ### Sampling from the prior
-
+As we talk in the morning, the posterior probability (our tree score) is proportional to the product of the phylogenetic likelihood and the prior probability of the model. If the data has very low phylogenetic signal and the priors are very informative, you could get results dominated by the prior (i.e., your data is not giving you additional information).
+<details><summary>How would you sample from the prior?</summary>
+<p>
+Running the same exact analysis without data. In order to do so, we can substitute all characters by gaps (-) or missing data (?). In this case, we will be using a trace I generated in advance.
+</p>
+</details>
+- Add the posterior sample *Desktop/tutorial/prerun_results/strict_prior.log* into Tracer. As the name indicates, I run the MCMC only sampling from the prior.
+- Compare the posterior distributions of the two long chains with the one only sampling the prior.
+<details><summary>Do you think the MCMC was driven strongly by the prior?</summary>
+<p>
+Not really, even in this very small dataset. However, you can see how the data is informing certain parameters better than others.
+</p>
+</details>
 
 ### Summarizing the results
+DIEGO, WHAT ABOUT THE TREE??? WASN'T PHYLOGENETICS ALL ABOUT TREES??? Not only, but yes, it is now time to summarize our posterior sample of trees in one plot. There are several criteria on how to choose the best tree. [Read about it here.](https://www.beast2.org/summarizing-posterior-trees/)
 
-### Obtaining the tree
+- Load the posterior sample of trees you want into TreeAnnotator. I recommend using the longest one you generated, probably *Desktop/tutorial/strict_test.trees*
+- Select the number of trees you want to discard, **burnin**
+<details><summary>What number do I use?</summary>
+<p>
+It is up to you. 10% of the samples is the standard, but really it is up to you. Make sure to keep a good sample size!
+</p>
+</details>
+- Indicate where you want to save the resulting tree, and run the program.
+
+### Exploring the tree
+- Load (you can drag and drop) the tree you have just reconstructed in FigTree.
+- Make sure to add the posterior probability of the nodes as node labels.
+- You can play with the different display options, useful for publication!
 
 ## Exercise 2 (Optional)
-We will analyze traces of a real experiment
-
+I included the posterior samples (3 chains) of the Barrett's esophagus study we published using PISCA. You can find them at *Desktop/tutorial/traces_BE/*.
+Replicate what we did up to now using this dataset.
 
 <!---
 ## Installation
