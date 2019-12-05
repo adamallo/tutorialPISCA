@@ -7,7 +7,7 @@ You can follow this tutorial using your own system or a virtual machine image I 
 **License disclaimer: I will provided the virtual machine for its usage during the ACE Bootcamp only. Do not distribute it.**
 
 ### Hyperlinks
-I have included a lot of supplementary information and reading materials linked along the text. Please, feel free to wander away, either during the tutorial session (making sure you are able to finish the assignment) or definitely afterwards. 
+I have included a lot of supplementary information and reading materials linked in the text. Please, feel free to wander away, either during the tutorial session (making sure you are able to finish the assignment) or definitely afterwards. 
 Other resources of interest:
 - [BEAST2 book](https://www.beast2.org/book/){:target="_blank"}
 - [Taming the BEAST tutorials](https://taming-the-beast.org/tutorials/)
@@ -28,7 +28,7 @@ We will be analyzing a rather small toy dataset. Part of the activity will be fo
 In this activity you will learn:
 
 - How to run PISCA
-- Determine if the MCMC chain converged and mixed properly
+- Determine if the Markov Chain Monte Carlo (MCMC) chain converged and mixed properly
 - Tweak the MCMC chain
 - Identify if your results are driven by your priors
 - Summarize the results
@@ -43,13 +43,13 @@ In this activity you will learn:
 - This analysis will take from 1 to 5 minutes. 
 **Use this time to inspect the information that is printed in the console**
 
-<details><summary>Could you tell how many MCMC iteractions (states in the Markov Chain) are you running the algorithm for?</summary>
+<details><summary>Could you tell how many MCMC iteractions (states in the Markov Chain) you are running the algorithm for?</summary>
 <p>
 The first column indicates the step sampled in that row
 </p>
 </details>
 
-<details><summary>Why the posterior probability is not growing monotonically?</summary>
+<details><summary>Why is the posterior probability not growing monotonically?</summary>
 <p>
 Remember, MCMC is a Markov chain that samples the posterior probability distribution (remember the robot!). It samples more often the regions of the distribution with higher density, instead of maximizing any value. 
 </p>
@@ -104,7 +104,7 @@ It adds:
 - Adapts strict and relaxed clock models to this framework
 
 ## [BEAGLE](https://beast.community/beagle){:target="_blank"}
-High performance computing library that BEAST can use to speed up some calculations (parallelization using multiple CPU and/or GPU cores among others). **PISCA IS NOT COMPATIBLE WITH BEAGLE YET.** I have set up BEAST/PISCA in the VM so that by default BEAGLE is desactivated. Please, do not activate it, and **make sure it is not active if you are running BEAST/PISCA in your own system**.
+High performance computing library that BEAST can use to speed up some calculations (parallelization using multiple CPU and/or GPU cores among others). **PISCA IS NOT COMPATIBLE WITH BEAGLE YET.** I have set up BEAST/PISCA in the VM so that by default BEAGLE is deactivated. Please, do not activate it, and **make sure it is not active if you are running BEAST/PISCA in your own system**.
 
 ## [TreeAnnotator](https://beast.community/treeannotator){:target="_blank"}
 BEAST component that summarizes a posterior samples of trees in a single estimate. Usually, this is the maximum clade credibility tree topology (i.e., tree that maximizes the product of the posterior probability of the clades it contains) with common ancestor height branch lengths (i.e., the mean of the MRCA of all pairs of nodes in that clade). However, other options are available. 
@@ -125,22 +125,19 @@ More comprehensive R package to diagnose convergence and mixing of MCMC chains, 
 ### Analyzing the MCMC chain of the *strict\_test\_short.xml* run
 - Open the program *Tracer*
 - Find the file with the posterior sample of the evolutionary parameters of this run in the folder *Desktop/tutorial/*
+
 <details><summary>The file with the posterior whaaat?</summary>
 <p>
 The values that the MCMC had in each sampled state for evolutionary parameters other than the phylogenetic tree. The strict_test_short.log file.
 </p>
 </details>
+
 - Inspect the file with a text editor to understand what you are working with (a 1 minute glance)
 - Drag it and drop it on Tracer
+
 <details><summary>Do you think we have sampled the posterior probability properly?</summary>
 <p>
 NO. ESSs are very low. Remember, we would like to have >200 ESS in all parameters of interest, and any parameter with very low ESS indicate a convergence (or mixing) problem
-</p>
-</details>
-
-<details><summary>Do all parameters mix equally?</summary>
-<p>
-NO. You will see that some parameters are mixing properly (fuzzy caterpillar), while others show mixing problems.
 </p>
 </details>
 
@@ -172,7 +169,7 @@ The operators are the functions used in the MCMC to propose new states. The oper
 </p>
 </details>
 
-<details><summary>What do you think the column count may mean. Why do you think that not all operators have the same count? Do you think that tunning this may improve your MCMC chain</summary>
+<details><summary>What do you think the column count may mean? Why do you think that not all operators have the same count? Do you think that tunning this may improve your MCMC chain?</summary>
 <p>
 Some parameters are easier to estimate than others, and some are more interesting than others. Tweaking the relative weight of the different operators in the xml may help you improve the sampling efficiency of your MCMC.
 </p>
