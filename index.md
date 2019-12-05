@@ -12,11 +12,63 @@ Other resources of interest:
 - [BEAST2 book](https://www.beast2.org/book/){:target="_blank"}
 - [Taming the BEAST tutorials](https://taming-the-beast.org/tutorials/)
 
-## Exercise 1: Start your first PISCA analysis
-- Execute (double-click) the BEAST program in your desktop
-- Find the input file *** in Desktop/tutorial/datasets
+### Collapsed boxes
+You will see collapsed boxes along the tutorial document. Please, try to answer the questions on your own before clicking on them. Otherwise, this tutorial will be of little use for you!
+
+<details><summary>Understood?</summary>
+<p>
+YES!
+</p>
+</details>
+
+## Exercise 1: Using PISCA to reconstruct a somatic phylogeny
+### General description
+We will be analyzing a rather small toy dataset. Part of the activity will be for you to get a better understanding on its characteristics by inspecting the input data. For now, it will be enough to know that we are analyzing allele-specific copy number states from a number of homogeneous samples taken at two time points (dated in years from the date of birth of the patient).
+
+In this activity you will learn:
+
+- How to run PISCA
+- Determine if the MCMC chain converged and mixed properly
+- Tweak the MCMC chain
+- Identify if your results are driven by your priors
+
+### Running PISCA using a given XML input file
+
+- Execute (double-click) the BEAST program in your desktop (BEAST1.8.4wPISCA1.0.2)
+- Find the input file *strict\_test\_short.xml* in *Desktop/tutorial/datasets*
+- Feel free to change the random number seed (not necessary)
 - Start the analysis
-- This analysis will take from ** to *** minutes. Please, use this time to get familiarized with the software we will be using along this tutorial (below)
+- This analysis will take from 1 to 5 minutes. **Use this time to inspect the information that is printed in the console**
+
+<details><summary>**Could you tell how many MCMC iteractions (states in the Markov Chain) are you running the algorithm for?**</summary>
+<p>
+The first column indicates the step sampled in that row
+</p>
+</details>
+
+<details><summary>**Why the posterior probability is not growing monotonically?**</summary>
+<p>
+Remember, MCMC is a Markov chain that samples the posterior probability distribution (remember the robot!). It samples more often the regions of the distribution with higher density, instead of maximizing any value. 
+</p>
+</details>
+
+##I need to move this to the next block
+<details><summary>**Take a careful look at the last table printed on the console when the analysis finishes. Do you remember what operators are?**</summary>
+<p>
+The operators are the functions used in the MCMC to propose new states. The operator name follows a simple scheme function(parameter).
+</p>
+</details>
+
+<details><summary>**What do you think the column count may mean. Why do you think that not all operators have the same count? Do you think that tunning this may improve your MCMC chain>**</summary>
+<p>
+Some parameters are easier to estimate than others, and some are more interesting than others. Tweaking the relative weight of the different operators in the xml may help you improve the sampling efficiency of your MCMC.
+</p>
+</details>
+
+### Running a second XML input file
+- Before going forward, repeat the same 
+
+Please, use this time to get familiarized with the software we will be using along this tutorial (below)
 
 ## Software relevant for this tutorial
 ## [BEAST](http://beast.community/index.html){:target="_blank"}
@@ -40,7 +92,12 @@ Among others, BEAST has models for:
 BEAST uses a single input file that contains the input data, models, and MCMC parameters (priors, operators, chain options) in [XML](https://en.wikipedia.org/wiki/XML){:target="_blank"} format. This file is usually long and relatively difficult to read for a human being.
 
 ### Output
-BEAST generates two main output files, a .log file and a .trees file. The first contain the posterior sample of the model parameter values, the second, the posterior sample of the trees (topologies, branch lengths, and some other branch-specific parameters).
+BEAST generates two main output files:
+- **Parameter sample (.log)**. Posterior sample of the model parameter values
+- **Tree sample (.trees)**. Posterior sample of the trees (topologies, branch lengths, and some other branch-specific parameters).
+
+Depending on the configuration of the XML you may find additional output files, for example
+- **Operator summary (.ops)**. Summary of the activity of the different operators along the MCMC chain.
 
 ***NOTE***: There are currently two main implementations of BEAST, [BEAST1.X](http://beast.community/index.html) and [BEAST2.X](http://www.beast2.org/). They have a pretty recent common ancestor but are currently evolving independently. In this tutorial we will be using BEAST1.8 
 
@@ -71,9 +128,10 @@ Program to inspect and format phylogenetic trees.
 Program to analyze the posterior sample of MCMC data. Among other features, it is used to [obtain posterior point estimates of parameters](https://beast.community/analysing_beast_output) and [check proper convergence](https://beast.community/tracer_convergence) and mixing.
 
 ## [RWTY](https://cran.r-project.org/web/packages/rwty/vignettes/rwty.html){:target="_blank"}
-More comprehensive R package to diagnose convergence and mixing of MCMC chains, including intra and inter-chain diagnostics.
+More comprehensive R package to diagnose convergence and mixing of MCMC chains, including intra and inter-chain diagnostics of trees.
 
-# Exercise 1 (cont).
+# Exercise 1 (cont.)
+## 
 
 
 <!---
