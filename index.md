@@ -1,13 +1,10 @@
 # Tutorial PISCA
 
 ## READ FIRST
-### Virtual Machine or Native installation?
-You can follow this tutorial using your own system or a virtual machine image I will provide for the ACE Bootcamp. A virtual machine is an emulation of a computer system, sort of a simulated computer within your computer. If you use the virtual machine image I am providing (with a Linux distribution, specifically, Ubuntu 18.04.3 LTS), you will not have to install any software in your computer, apart from a virtualization product (e.g., [VirtualBox](https://www.virtualbox.org/wiki/Downloads){:target="_blank"}) and all software needed to follow the tutorial will be included in the machine. The execution of PISCA will be slower, but you will be able to follow the tutorial. **I recommend using the virtual machine to avoid installation issues**. 
-
-**License disclaimer: I will provided the virtual machine for its usage during the ACE Bootcamp only. Do not distribute it.**
-
+You can follow this tutorial using [this package with input, intermediate, and result files]() or install BEAST1.8.X and PISCA and run the exercises in your system. I recommend the first option for most people since you will obtain the same learning experience without the hassle of having to install software in your computer.
+ 
 ### Hyperlinks
-I have included a lot of supplementary information and reading materials linked in the text. Please, feel free to wander away, either during the tutorial session (making sure you are able to finish the assignment) or definitely afterwards. 
+I have included a lot of supplementary information and reading materials linked in the text. Please, feel free to wander away, either during the interactive learning session (making sure you are able to finish the assignment) or definitely afterwards. 
 Other resources of interest:
 - [BEAST2 book](https://www.beast2.org/book/){:target="_blank"}
 - [Taming the BEAST tutorials](https://taming-the-beast.org/tutorials/)
@@ -34,14 +31,13 @@ In this activity you will learn:
 - Summarize the results
 - Obtain a visual representation of the resulting evolutionary hypothesis (tree and parameters)
 
-### Running PISCA using a given XML input file
+### Running PISCA using a given XML input file ***(optional)***
+- Input file: `strict\_test\_short.xml`
+- Running command: `beast --beagle-off --seed 1020 strict\_test\_short.xml
+- This analysis will take from 1 to 5 minutes.
 
-- Execute (double-click) the BEAST program in your desktop (BEAST1.8.4wPISCA1.0.2)
-- Find the input file *strict\_test\_short.xml* in *Desktop/tutorial/datasets*
-- Feel free to change the random number seed (not necessary)
-- Start the analysis
-- This analysis will take from 1 to 5 minutes. 
-**Use this time to inspect the information that is printed in the console**
+### Inspect the information that BEAST logs in the console
+- For this, open the file `strict_test_short.log`
 
 <details><summary>Could you tell how many MCMC iteractions (states in the Markov Chain) you are running the algorithm for?</summary>
 <p>
@@ -51,14 +47,14 @@ The first column indicates the step sampled in that row
 
 <details><summary>Why is the posterior probability not growing monotonically?</summary>
 <p>
-Remember, MCMC is a Markov chain that samples the posterior probability distribution (remember the robot!). It samples more often the regions of the distribution with higher density, instead of maximizing any value. 
+Remember, MCMC is a Markov chain that samples the posterior probability distribution (remember the robot). It samples more often the regions of the distribution with higher density, instead of maximizing any value. 
 </p>
 </details>
 
-### Running a second XML input file
-- Before going forward, repeat the same procedure with the *strict\_test.xml* file
-- This analysis will take from 10 to 20 minutes.
-**We will use this time to get familiarized with the software we will be using later, and to analyze the previous run**
+### Running a second XML input file ***(optional)***
+- Before going forward, repeat the same procedure with the `strict\_test.xml` file
+
+### Get familiarized with the software we will be using to analyze our results
 
 ## Software relevant for this tutorial
 ## [BEAST](http://beast.community/index.html){:target="_blank"}
@@ -89,7 +85,7 @@ BEAST generates two main output files:
 Depending on the configuration of the XML you may find additional output files, for example
 - **Operator summary (.ops)**. Summary of the activity of the different operators along the MCMC chain.
 
-***NOTE***: There are currently two main implementations of BEAST, [BEAST1.X](http://beast.community/index.html) and [BEAST2.X](http://www.beast2.org/). They have a pretty recent common ancestor but are currently evolving independently. In this tutorial we will be using BEAST1.8 
+***NOTE***: There are currently two main implementations of BEAST, [BEAST1.X](http://beast.community/index.html) and [BEAST2.X](http://www.beast2.org/). They have a pretty recent common ancestor but are currently evolving independently. In this tutorial we are using BEAST1.8 
 
 ## BEAUti
 Graphical user interface distributed with BEAST that makes it easier to generate XML files for the most common scenarios. **Unfortunately, PISCA is not yet compatible with BEAUti**. For this reason, along most of this tutorial you will be working with pre-generated XML files, although you may have to edit small sections of it. PISCA is distributed with scripts that help users generate XML files for the most common PISCA analyses.
@@ -98,13 +94,15 @@ Graphical user interface distributed with BEAST that makes it easier to generate
 BEAST1.8 plugin that expands BEAST with models to reconstruct the evolution of homogeneous somatic samples using allele-specific integer copy number states.
 It adds:
 
-- 3-parameter (gain, loss, and conversion) substitution model for SCAs
-- Ascertainment bias correction for this data type
+- 3-parameter (gain, loss, and conversion) substitution model for allele-specific SCAs
+- 2-parameter (gain, loss) substitution model for absolute SCAs
+- 1-parameter (relative demethylation rate) substitution model for bi-allelic binary data (methylation)
+- Ascertainment bias correction for these data types
 - Tree model with last universal normal cell
 - Adapts strict and relaxed clock models to this framework
 
 ## [BEAGLE](https://beast.community/beagle){:target="_blank"}
-High performance computing library that BEAST can use to speed up some calculations (parallelization using multiple CPU and/or GPU cores among others). **PISCA IS NOT COMPATIBLE WITH BEAGLE YET.** I have set up BEAST/PISCA in the VM so that by default BEAGLE is deactivated. Please, do not activate it, and **make sure it is not active if you are running BEAST/PISCA in your own system**.
+High performance computing library that BEAST can use to speed up some calculations (parallelization using multiple CPU and/or GPU cores among others). **PISCA IS NOT COMPATIBLE WITH BEAGLE YET.**.
 
 ## [TreeAnnotator](https://beast.community/treeannotator){:target="_blank"}
 BEAST component that summarizes a posterior samples of trees in a single estimate. Usually, this is the maximum clade credibility tree topology (i.e., tree that maximizes the product of the posterior probability of the clades it contains) with common ancestor height branch lengths (i.e., the mean of the MRCA of all pairs of nodes in that clade). However, other options are available. 
@@ -124,14 +122,14 @@ More comprehensive R package to diagnose convergence and mixing of MCMC chains, 
 
 ### Analyzing the MCMC chain of the *strict\_test\_short.xml* run
 - Open the program *Tracer*
-- Find the file with the posterior sample of the evolutionary parameters of this run in the folder *Desktop/tutorial/*
-<details><summary>The file with the posterior whaaat?</summary>
+- Find the file with the posterior sample of the evolutionary parameters of this run `strict_test_short.log`
+<details><summary>Posterior sample??</summary>
 <p>
-The values that the MCMC had in each sampled state for evolutionary parameters other than the phylogenetic tree. The strict_test_short.log file.
+The values that the MCMC took in each sampled state for evolutionary parameters other than the phylogenetic tree.
 </p>
 </details>
 - Inspect the file with a text editor to understand what you are working with (a 1 minute glance)
-- Drag it and drop it on Tracer
+- Open it on Tracer (you can just drag and drop)
 <details><summary>Do you think we have sampled the posterior probability properly?</summary>
 <p>
 NO. ESSs are very low. Remember, we would like to have >200 ESS in all parameters of interest, and any parameter with very low ESS indicate a convergence (or mixing) problem
@@ -151,12 +149,11 @@ The chain gets stuck estimating substitution rates. You will also see directiona
 <p>
 - The mixing of stuck parameters can be usually improved by decreasing the size of the step (editing the operator that proposes new values for this parameter).
 - The mixing of parameters that show trends can be usually improved by increasing the size of the step.
-- A lot of mixing problems can be solved increasing the sampling frequency. In this case, this run had an extremely low sampling frequency (20) just to generate this problems. However, generally speaking, we can't increase the sampling frequency forever (the chain would have to run forever), this is an equivalent to *brute force*.
+- A lot of mixing problems can be solved by increasing the sampling frequency. In this case, this run had an extremely low sampling frequency (20) just to force this issue on purpose. However, generally speaking, we cannot increase the sampling frequency forever; this is an equivalent to *brute force*.
 </p>
 </details>
 
-### Inspecting the chain we have running, *strict\_test.xml*
-- Is it done? Great! Otherwise, let me know.
+### Let's now consider the results of  `strict\_test.xml`
 <details><summary>Take a careful look at the last table printed on the console when the analysis finishes. Do you remember what operators are?</summary>
 <p>
 The operators are the functions used in the MCMC to propose new states. The operator name follows a simple scheme function(parameter).
@@ -167,10 +164,10 @@ The operators are the functions used in the MCMC to propose new states. The oper
 Some parameters are easier to estimate than others, and some are more interesting than others. Tweaking the relative weight of the different operators in the xml may help you improve the sampling efficiency of your MCMC.
 </p>
 </details>
-- Now, drag and drop the new posterior sample (*strict\_test.log*) into tracer. In the top panel, you will be able to see the two files (samples). You can select a specific parameter, and switch between one and another file. More importantly, you can also select both files (press ctrl when selecting the second), and compare the two posterior distributions
+- Now, drag and drop the new posterior sample `strict\_test.log` into tracer. In the top panel, you will be able to see the two files (samples). You can select a specific parameter, and switch between one and another file. More importantly, you can also select both files (press ctrl when selecting the second), and compare the two posterior distributions
 - Make sure to compare most/all parameters in the different views (estimates, marginal density, traits...)
 - Now, select two parameters at the same time to see their joint-marginal.
-- It is time to compare it with another posterior sample I previously generated. You can find it at *Desktop/tutorial/prerun_results/strict_test.log*
+- It is time to compare it with another posterior sample I previously generated. You can find it at `strict_test1.log`
 <details><summary>Do you think the MCMC converged?</summary>
 <p>
 These MCMC chains are fairly short due to time constraints. However, if you compare the two long chains you'd probably find that they seem to have converged. Remember, this is a toy dataset and therefore has less noise than real data.
@@ -179,24 +176,29 @@ These MCMC chains are fairly short due to time constraints. However, if you comp
 - Finally, I encourage you to dive into the .xml file. Can you locate the data? Models? Operators? MCMC options? At the end of the day, when you do real Bayesian inference you always end up having to modify the .xml directly, you'd better get used to it!
 
 ### Sampling from the prior
-As we talk in the morning, the posterior probability (our tree score) is proportional to the product of the phylogenetic likelihood and the prior probability of the model. If the data has very low phylogenetic signal and the priors are very informative, you could get results dominated by the prior (i.e., your data is not giving you additional information).
+As we talked earlier, the posterior probability (our tree score) is proportional to the product of the phylogenetic likelihood and the prior probability of the model. If the data has very low phylogenetic signal and the priors are very informative, you could get results dominated by the prior (i.e., your data is not giving you additional information).
+
 <details><summary>How would you sample from the prior?</summary>
 <p>
-Running the same exact analysis without data. In order to do so, we can substitute all characters by gaps (-) or missing data (?). In this case, we will be using a trace I generated in advance.
+Running the same exact analysis without data. In order to do so, we can substitute all characters by gaps (-) or missing data (?).
 </p>
 </details>
-- Add the posterior sample *Desktop/tutorial/prerun_results/strict_prior.log* into Tracer. As the name indicates, I run the MCMC only sampling from the prior.
+
+- Add the posterior sample `strict_prior.log` into Tracer. As the name indicates, I run the MCMC only sampling from the prior.
 - Compare the posterior distributions of the two long chains with the one only sampling the prior.
+
 <details><summary>Do you think the MCMC was driven strongly by the prior?</summary>
 <p>
-Not really, even in this very small dataset. However, you can see how the data is informing certain parameters better than others.
+Not really, even in this very small dataset. However, you can see how the data is informing certain parameters more strongly than others.
 </p>
 </details>
 
 ### Summarizing the results
-DIEGO, WHAT ABOUT THE TREE??? WASN'T PHYLOGENETICS ALL ABOUT TREES??? Not only, but yes, it is now time to summarize our posterior sample of trees in one plot. There are several criteria on how to choose the best tree. [Read about it here.](https://www.beast2.org/summarizing-posterior-trees/)
+It is now time to summarize our posterior sample of trees in one plot. There are several criteria on how to choose the best tree. [Read about it here.](https://www.beast2.org/summarizing-posterior-trees/)
 
-- Load the posterior sample of trees you want into TreeAnnotator. I recommend using the longest one you generated, probably *Desktop/tutorial/strict_test.trees*
+You can find the results of this step in `preruntrees/strict_test_sumtree.tree`
+
+- Load the posterior sample of trees `strict_test.trees` into TreeAnnotator.
 - Select the number of trees you want to discard, **burnin**
 <details><summary>What number do I use?</summary>
 <p>
@@ -206,12 +208,12 @@ It is up to you. 10% of the samples is the standard, but really it is up to you.
 - Indicate where you want to save the resulting tree, and run the program.
 
 ### Exploring the tree
-- Load (you can drag and drop) the tree you have just reconstructed in FigTree.
+- Load (you can drag and drop) the tree you have just reconstructed (`preruntrees/strict_test_sumtree.tree`) in FigTree.
 - Make sure to add the posterior probability of the nodes as node labels.
 - You can play with the different display options, useful for publication!
 
 ## Exercise 2 (Optional)
-I included the posterior samples (3 chains) of the Barrett's esophagus study we published using PISCA. You can find them at *Desktop/tutorial/traces_BE/*.
+I included the posterior samples (3 chains) of the Barrett's esophagus study we published using PISCA. You can find them at `traces_BE`.
 Replicate what we did up to now using this dataset.
 
 <!---
