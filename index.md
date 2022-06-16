@@ -1,7 +1,7 @@
 # Tutorial PISCA
 
 ## READ FIRST
-You can follow this tutorial using [this package with input, intermediate, and result files](https://drive.google.com/file/d/1-ETx6gnISUczkS06xRL7d9DnagIYol8k/view?usp=sharing) or install BEAST1.8.X and PISCA and run the exercises in your system. I recommend the first option for most people since you will obtain the same learning experience without the hassle of having to install software in your computer.
+You can follow this tutorial using [this package with input, intermediate, and result files](https://drive.google.com/file/d/1-ETx6gnISUczkS06xRL7d9DnagIYol8k/view?usp=sharing){:target="_blank"} or install BEAST1.8.X and PISCA and run the exercises in your system. I recommend the first option for most people since you will obtain the same learning experience without the hassle of having to install software in your computer.
  
 ### Hyperlinks
 I have included a lot of supplementary information and reading materials linked in the text. Please, feel free to wander away, either during the interactive learning session (making sure you are able to finish the assignment) or definitely afterwards. 
