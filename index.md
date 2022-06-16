@@ -1,7 +1,7 @@
 # Tutorial PISCA
 
 ## READ FIRST
-You can follow this tutorial using [this package with input, intermediate, and result files]() or install BEAST1.8.X and PISCA and run the exercises in your system. I recommend the first option for most people since you will obtain the same learning experience without the hassle of having to install software in your computer.
+You can follow this tutorial using [this package with input, intermediate, and result files](https://drive.google.com/file/d/1-ETx6gnISUczkS06xRL7d9DnagIYol8k/view?usp=sharing) or install BEAST1.8.X and PISCA and run the exercises in your system. I recommend the first option for most people since you will obtain the same learning experience without the hassle of having to install software in your computer.
  
 ### Hyperlinks
 I have included a lot of supplementary information and reading materials linked in the text. Please, feel free to wander away, either during the interactive learning session (making sure you are able to finish the assignment) or definitely afterwards. 
@@ -108,7 +108,7 @@ High performance computing library that BEAST can use to speed up some calculati
 BEAST component that summarizes a posterior samples of trees in a single estimate. Usually, this is the maximum clade credibility tree topology (i.e., tree that maximizes the product of the posterior probability of the clades it contains) with common ancestor height branch lengths (i.e., the mean of the MRCA of all pairs of nodes in that clade). However, other options are available. 
 
 ## [FigTree](http://tree.bio.ed.ac.uk/software/figtree/){:target="_blank"}
-Program to inspect and format phylogenetic trees. 
+Program to inspect and format phylogenetic trees. Its web is down since recently. 
 
 **WARNING:** Do not open a .trees file directly using FigTree. These files contain the whole posterior sample (i.e., thousands to millions of trees) and may freeze your computer. Make sure to only open with it a small number of trees (e.g., single estimates generated using TreeAnnotator).
 
